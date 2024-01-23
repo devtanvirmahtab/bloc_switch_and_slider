@@ -8,4 +8,3 @@ abstract class SwitchSliderEvent extends Equatable {
 }
 
 class EnableDisableSwitch extends SwitchSliderEvent {}
-

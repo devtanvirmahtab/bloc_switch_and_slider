@@ -18,13 +18,11 @@ class SwitchAndSliderScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocBuilder<SwitchSliderBloc,SwitchSliderState>(
+            BlocBuilder<SwitchSliderBloc, SwitchSliderState>(
               builder: (BuildContext context, state) {
                 return Switch(
                   value: state.isSwitch,
-                  onChanged: (value) {
-
-                  },
+                  onChanged: (value) {},
                 );
               },
             ),
