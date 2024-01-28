@@ -9,6 +9,7 @@ class SwitchAndSliderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("build");
     return Scaffold(
       appBar: AppBar(
         title: const Text("Switch And Slider"),
@@ -20,7 +21,9 @@ class SwitchAndSliderScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BlocBuilder<SwitchSliderBloc, SwitchSliderState>(
+              buildWhen: (previous,current) => previous.isSwitch != current.isSwitch,
               builder: (BuildContext context, state) {
+                print("switch");
                 return Switch(
                   value: state.isSwitch,
                   onChanged: (value) {
@@ -32,6 +35,17 @@ class SwitchAndSliderScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
+            BlocBuilder<SwitchSliderBloc, SwitchSliderState>(
+              buildWhen: (previous,current) => previous.slider != current.slider,
+              builder: (context, state) {
+                print("slider");
+                return Container(
+                  width: double.infinity,
+                  height: 200,
+                  color: Colors.green.withOpacity(state.slider),
+                );
+              },
+            ),
             Container(
               width: double.infinity,
               height: 200,
@@ -40,9 +54,15 @@ class SwitchAndSliderScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            Slider(
-              value: 0.4,
-              onChanged: (value) {},
+            BlocBuilder<SwitchSliderBloc, SwitchSliderState>(
+              builder: (context, state) {
+                return Slider(
+                  value: state.slider,
+                  onChanged: (value) {
+                    context.read<SwitchSliderBloc>().add(SliderEvents(slider: value));
+                  },
+                );
+              },
             ),
           ],
         ),
